@@ -1,3 +1,49 @@
-﻿body {
-    background-image: linear-gradient( );
+﻿:root {
+    --main-glow: #ff05c5;
+    --accent-glow: #ff00de;
+    --bg-dark: #0a0a0a;
+}
+
+body {
+    margin: 0;
+    background-color: var(--bg-dark);
+    background-image: linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 50px 50px;
+    font-family: 'Cascadia Mono', monospace;
+}
+
+h1 {
+    color: #fff;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px var(--main-glow), 0 0 60px var(--main-glow), 0 0 100px var(--main-glow);
+    animation: crt-flicker 0.15s infinite alternate;
+}
+p {
+    color: #fff;
+    text-transform: uppercase;
+}
+
+@keyframes crt-flicker {
+    0% {
+        opacity: 0.95;
+        transform: skew(0.5deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: skew(-0.5deg);
+    }
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(180, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 4px, 3px 100%;
+    pointer-events: none;
+    z-index: 9999;
 }
