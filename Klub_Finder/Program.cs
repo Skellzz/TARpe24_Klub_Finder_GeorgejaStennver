@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Klub_Finder.Data;
 namespace Klub_Finder
 {
     public class Program
@@ -8,6 +10,10 @@ namespace Klub_Finder
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+           
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(connectionString));
 
             var app = builder.Build();
 
