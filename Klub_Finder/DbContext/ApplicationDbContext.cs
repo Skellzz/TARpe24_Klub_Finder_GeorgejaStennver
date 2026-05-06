@@ -12,5 +12,6 @@ namespace Klub_Finder.Data
 
         public DbSet<Klubi> Klubid { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Klub_Finder.Models.Admin> Admin { get; set; } = default!;
     }
 }
