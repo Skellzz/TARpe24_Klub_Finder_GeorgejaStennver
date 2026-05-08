@@ -7,12 +7,12 @@ namespace Klub_Finder.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly SignInManager<User> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
-            SignInManager<User> signInManager)
+            SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -22,7 +22,7 @@ namespace Klub_Finder.Controllers
         [AllowAnonymous]
         public IActionResult Register()
         {
-            return View(new SignUpViewModel());
+            return View(/*new SignUpViewModel()*/);
         }
 
         [HttpPost]
@@ -39,18 +39,17 @@ namespace Klub_Finder.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 DisplayName = model.DisplayName,
-                ConfirmPassword = model.ConfirmPassword,
                 Age = model.Age,
                 Phone = model.Phone,
                 City = model.City,
             };
 
+            
             var result = await _userManager.CreateAsync(user, model.Password);
 
-            foreach (var error in result.Errors)
-                ModelState.AddModelError(string.Empty, error.Description);
+    
 
-            return View(model);
+            return RedirectToAction("Index", "Home");
         }
 
 
