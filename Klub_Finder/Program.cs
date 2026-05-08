@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Klub_Finder.Data;
+using Klub_Finder.Models;
+using Microsoft.Extensions.Options;
 namespace Klub_Finder
 {
     public class Program
@@ -14,6 +16,10 @@ namespace Klub_Finder
            
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(connectionString));
+
+            builder.Services.AddDefaultIdentity<User>(Options => Options.SignIn.RequireConfirmedAccount = true)
+                    .AddEntityFrameworkStores<ApplicationDbContext>();
+           
 
             var app = builder.Build();
 
@@ -30,12 +36,14 @@ namespace Klub_Finder
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
+           
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+            app.MapRazorPages();
             app.Run();
         }
     }
