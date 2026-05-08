@@ -1,6 +1,7 @@
-﻿namespace Klub_Finder.Models
+﻿using Microsoft.AspNetCore.Identity;
+namespace Klub_Finder.Models
 {
-    public class User
+    public class User : IdentityUser
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
