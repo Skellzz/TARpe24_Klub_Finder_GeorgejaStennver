@@ -10,6 +10,10 @@ namespace Klub_Finder.Models
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        [Display(Name = "Sisesta parool uuesti")]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Paroolid ei kattu, kontrolli et samad.")]
+        public string ConfirmPassword { get; set; }
 
         [Required]
         public string FirstName { get; set; }
@@ -18,7 +22,7 @@ namespace Klub_Finder.Models
         public string LastName { get; set; }
 
         [Required]
-        public string Nickname { get; set; }
+        public string DisplayName { get; set; }
 
         [Required]
         public int Age { get; set; }
@@ -27,6 +31,6 @@ namespace Klub_Finder.Models
         public int Phone { get; set; }
 
         [Required]
-        public int City { get; set; }
+        public string City { get; set; }
     }
 }
