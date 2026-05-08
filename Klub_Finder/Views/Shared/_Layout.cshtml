@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Klub_Finder.Models.ApplicationUser> signInManager;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -39,14 +42,28 @@
                 </div>
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" >
-					<ul class="navbar-nav flex-grow-1" style="justify-content: end;">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Register">Sign up</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
-                        </li>
-                   </ul>
+					<ul class="navbar-nav flex-grow-1" style="justify-content: end;">                     
+                        @if (signInManager.IsSignedIn(User))
+                            {
+                                <li class="nav-item">
+                                    <form method="post" asp-controller="Account" asp-action="Logout">
+                                        <button type="submit" class="nav-link btn btn-link">
+                                            Logout
+                                        </button>
+                                    </form>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Register">Sign up</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                                </li>
+                            }
+
+                        </ul>
 
             </div>
         </nav>
