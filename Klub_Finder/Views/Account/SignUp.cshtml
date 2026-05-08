@@ -6,11 +6,11 @@
     <title>Home page</title>
 </head>
 <body>
-    <h1 class="display-4">Login</h1>
+    <h1 class="display-4">Sign Up</h1>
+     
+    <div asp-action="Register" method="post"></div>
 
-    <div asp-action="Login" method="post"></div>
-
-    <form asp-action="Login" method="post">
+    <form asp-action="Register" method="post">
         <div class="form-group">
             <label asp-for="Email"></label>
             <input asp-for="Email" class="form-control" />

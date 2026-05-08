@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Klub_Finder.Data;
 using Klub_Finder.Models;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity;
 namespace Klub_Finder
 {
     public class Program
@@ -19,7 +20,17 @@ namespace Klub_Finder
 
             builder.Services.AddDefaultIdentity<User>(Options => Options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<ApplicationDbContext>();
-           
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(Options =>
+            {
+                Options.SignIn.RequireConfirmedAccount = false;
+                Options.Password.RequiredLength = 2;
+                Options.Password.RequireNonAlphanumeric = false;
+                Options.Password.RequireUppercase = false;
+            })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
 
             var app = builder.Build();
 
