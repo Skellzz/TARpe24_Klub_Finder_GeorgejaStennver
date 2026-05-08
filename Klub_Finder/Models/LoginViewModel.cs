@@ -5,7 +5,6 @@ namespace Klub_Finder.Models
     {
         [Required]
         [EmailAddress]
-
         public string Email { get; set; }
 
         [Required]
@@ -13,6 +12,6 @@ namespace Klub_Finder.Models
         public string Password { get; set; }
 
         [Display(Name = "Rember me ?")]
-        public bool RemeberMe { get; set; }
+        public bool RememberMe { get; set; }
     }
 }

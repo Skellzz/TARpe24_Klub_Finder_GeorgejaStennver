@@ -22,6 +22,10 @@ p {
     color: #fff;
     text-transform: uppercase;
 }
+div {
+    color: #fff;
+    text-transform: uppercase;
+}
 
 @keyframes crt-flicker {
     0% {
