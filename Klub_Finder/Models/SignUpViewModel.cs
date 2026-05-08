@@ -10,11 +10,10 @@ namespace Klub_Finder.Models
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [Display(Name = "Sisesta parool uuesti")]
-        [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Paroolid ei kattu, kontrolli et samad.")]
+        //[Display(Name = "Sisesta parool uuesti")]
+        //[DataType(DataType.Password)]
+        //[Compare("Password", ErrorMessage = "Paroolid ei kattu, kontrolli et samad.")]
         public string ConfirmPassword { get; set; }
-
         [Required]
         public string FirstName { get; set; }
 
