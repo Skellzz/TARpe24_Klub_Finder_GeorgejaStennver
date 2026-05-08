@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Dynamic;
 namespace Klub_Finder.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<User>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -12,6 +12,5 @@ namespace Klub_Finder.Data
         }
 
         public DbSet<Klubi> Klubid { get; set; }
-        public DbSet<User> Users { get; set; }
     }
 }
