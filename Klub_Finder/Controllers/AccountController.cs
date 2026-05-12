@@ -79,13 +79,13 @@ namespace Klub_Finder.Controllers
             }
             return View(model);
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Logout()
-        //{
-           // await _signInManager.SignOutAsync();
-            //return RedirectToAction("Login", "Account");
-       // }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
+        }
        
     }
 }
