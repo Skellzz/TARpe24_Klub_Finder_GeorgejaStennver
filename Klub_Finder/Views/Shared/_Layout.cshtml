@@ -1,5 +1,8 @@
 ﻿﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<Klub_Finder.Models.ApplicationUser> signInManager;
+@inject SignInManager<Klub_Finder.Models.ApplicationUser> signInManager
+@inject UserManager<Klub_Finder.Models.ApplicationUser> UserManager
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,19 +30,37 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AboutUs">About us</a>
-                        </li>
-                        
-
+                        @if (User.Identity.IsAuthenticated && (await UserManager.GetUserAsync(User))?.IsAdmin == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AboutUs">About us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link  text-" asp-area="" asp-controller="Klub" asp-action="Create">Create Klub</a>
+                            </li>
+                        }
+                        else
+                        {
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AboutUs">About us</a>
+                            </li>
+                        }
                     </ul>
                 </div>
+
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" >
 					<ul class="navbar-nav flex-grow-1" style="justify-content: end;">                     
