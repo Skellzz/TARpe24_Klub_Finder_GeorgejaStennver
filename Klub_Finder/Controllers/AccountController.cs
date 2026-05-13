@@ -43,14 +43,22 @@ namespace Klub_Finder.Controllers
                 Age = model.Age,
                 Phone = model.Phone,
                 City = model.City,
+                IsAdmin = model.IsAdmin 
             };
 
-            
             var result = await _userManager.CreateAsync(user, model.Password);
 
-    
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-            return RedirectToAction("Index", "Home");
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return View(model);
         }
 
 
@@ -67,7 +75,12 @@ namespace Klub_Finder.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(
+                    model.Email,
+                    model.Password,
+                    isPersistent: model.RememberMe,
+                    lockoutOnFailure: false
+                );
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
@@ -86,6 +99,8 @@ namespace Klub_Finder.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
         }
+
+
        
     }
 }

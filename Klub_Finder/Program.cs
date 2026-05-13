@@ -11,31 +11,43 @@ namespace Klub_Finder
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services.AddControllersWithViews();
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-           
+
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(connectionString));
+            
+            builder.Services.AddSingleton(TimeProvider.System);
 
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(Options =>
+            builder.Services.AddSingleton(TimeProvider.System);
+
+            builder.Services.AddIdentityCore<ApplicationUser>(Options =>
             {
                 Options.SignIn.RequireConfirmedAccount = false;
                 Options.Password.RequiredLength = 2;
                 Options.Password.RequireNonAlphanumeric = false;
                 Options.Password.RequireUppercase = false;
+                
             })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders()
+            .AddSignInManager<SignInManager<ApplicationUser>>()
+            .AddDefaultUI();
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+            })
+            .AddIdentityCookies(); 
 
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -46,11 +58,10 @@ namespace Klub_Finder
 
             app.UseAuthentication();
             app.UseAuthorization();
-           
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
 
             app.Run();
         }

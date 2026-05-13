@@ -9,5 +9,7 @@ namespace Klub_Finder.Models
         public int Age { get; set; }
         public int Phone { get; set; }
         public string City { get; set; }
+        public bool IsAdmin { get; set; }
+
     }
 }

@@ -11,7 +11,7 @@ namespace Klub_Finder.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Rember me ?")]
+        [Display(Name = "Remember me ?")]
         public bool RememberMe { get; set; }
     }
 }

@@ -10,7 +10,9 @@ namespace Klub_Finder.Models
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
+        [Required]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Paroolid ei kattu.")]
         public string ConfirmPassword { get; set; }
         [Required]
         public string FirstName { get; set; }
@@ -30,7 +32,7 @@ namespace Klub_Finder.Models
         [Required]
         public string City { get; set; }
 
-        [Display(Name = "ADMIN USER")]
+        [Display(Name = "Secret")]
         public bool IsAdmin { get; set; }
     }
 }

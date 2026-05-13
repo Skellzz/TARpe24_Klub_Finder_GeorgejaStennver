@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Klub_Finder.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260508114520_init4")]
-    partial class init4
+    [Migration("20260513062901_AddIsAdminToUser")]
+    partial class AddIsAdminToUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,6 +58,9 @@ namespace Klub_Finder.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
