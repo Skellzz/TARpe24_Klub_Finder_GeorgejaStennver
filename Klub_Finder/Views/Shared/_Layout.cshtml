@@ -1,5 +1,4 @@
 ﻿﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<Klub_Finder.Models.ApplicationUser> signInManager;
 @inject SignInManager<Klub_Finder.Models.ApplicationUser> signInManager
 @inject UserManager<Klub_Finder.Models.ApplicationUser> UserManager
 
@@ -11,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Klub Finder</title>
     <head>
-        @RenderSection("css", false)
+        @RenderSection("Styles", false)
     </head>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/index.css" />
@@ -45,7 +44,7 @@
                                 <a class="nav-link  text-" asp-area="" asp-controller="Klub" asp-action="Create">Create Klub</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link  text-" asp-area="" asp-controller="FoodAndDrinks" asp-action="Index">Menu</a>
+                                <a class="nav-link" asp-area="" asp-controller="FoodAndDrinks" asp-action="Index">Menu</a>
                             </li>
                         }
                         else
