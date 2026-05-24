@@ -1,18 +1,39 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Klub Finder</title>
-    <head>
-        @RenderSection("css", false)
-    </head>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/index.css" />
-    <script type="text/javascript" src="~/js/Retro.js"></script>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Klub_Finder.styles.css" asp-append-version="true" />
-</head>
-<body>
+﻿@model IEnumerable<Klub_Finder.Models.Food>
 
-</body>
+@{
+    ViewData["Title"] = "Food";
+}
+
+<div class="container">
+    <h1>Food</h1>
+    <p>Tere tulemast toidu lehele! Siin saad näha kõiki toite mida klubid pakuvad.</p>
+
+    <a asp-controller="Food" asp-action="Create" class="btn btn-primary mb-3">
+        Add Food
+    </a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FoodName</td>
+                    <td>@item.Description</td>
+                    <td>@item.Price €</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
