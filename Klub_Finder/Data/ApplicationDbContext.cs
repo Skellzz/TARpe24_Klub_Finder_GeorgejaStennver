@@ -12,5 +12,6 @@ namespace Klub_Finder.Data
         }
 
         public DbSet<Klubi> Klubid { get; set; }
+        public DbSet<Food> Food { get; set; }
     }
 }
