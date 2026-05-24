@@ -1,8 +1,19 @@
-﻿@{
-    ViewData["Title"] = "Menu page";
-}
-<h1>Menu</h1>
+﻿
+    @{
+        ViewData["Title"] = "Menu Page";
+    }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
-}
+<div class="container text-center mt-5">
+    <h1>Menu Page</h1>
+    <p>Vali, kas soovid lisada toidu või joogi:</p>
+
+    <div class="d-flex justify-content-center gap-3 mt-4">
+        <a asp-controller="Jook" asp-action="Index" class="btn btn-primary btn-lg">
+            Drinks
+        </a>
+
+        <a asp-controller="Food" asp-action="Index" class="btn btn-success btn-lg">
+            Food
+        </a>
+    </div>
+</div>
