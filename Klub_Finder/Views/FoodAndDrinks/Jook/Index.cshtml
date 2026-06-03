@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Klub_Finder.Models.Jook>
+
+@{
+    ViewData["Title"] = "Drinks";
+}
+
+<div class="container">
+    <h1>Drinks</h1>
+    <p>Tere tulemast joogi lehele! Siin saad näha kõiki jooke mida klubid pakuvad.</p>
+
+    <a asp-controller="Jook" asp-action="Create" class="btn btn-primary mb-3">
+        Add Drink
+    </a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Alcohol %</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.DrinkName</td>
+                    <td>@item.DrinkType</td>
+                    <td>@item.AlcoholPercentage</td>
+                    <td>@item.Description</td>
+                    <td>@item.Price €</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
