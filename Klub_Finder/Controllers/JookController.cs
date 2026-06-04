@@ -24,6 +24,7 @@ namespace Klub_Finder.Controllers
 
         public async Task<IActionResult> Index()
         {
+<<<<<<< HEAD
             var joogid = await _context.Jook.ToListAsync();
 
             if (await IsAdmin())
@@ -32,14 +33,23 @@ namespace Klub_Finder.Controllers
             }
 
             return View("~/Views/UserMenuDrinkFood/Jook/Index.cshtml", joogid);
+=======
+            var jook = await _context.Jook.ToListAsync();
+            return View("~/Views/FoodAndDrinks/Jook/Index.cshtml", jook);
+>>>>>>> 8adf4a614757fef99e8e3ba1e6830dfa14cd8b54
         }
 
         public async Task<IActionResult> Create()
         {
+<<<<<<< HEAD
             if (!await IsAdmin())
             {
                 return Forbid();
             }
+=======
+            return View("~/Views/FoodAndDrinks/Jook/Create.cshtml");
+        }
+>>>>>>> 8adf4a614757fef99e8e3ba1e6830dfa14cd8b54
 
             return View("~/Views/FoodAndDrinks/Jook/Create.cshtml");
         }
