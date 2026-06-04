@@ -54,14 +54,24 @@ namespace Klub_Finder.Controllers
                 return Forbid();
             }
 
-            if (jook.ImageFile != null)
+            ModelState.Remove("ImageFile");
+            ModelState.Remove("ImagePath");
+
+            if (jook.ImageFile != null && jook.ImageFile.Length > 0)
             {
-                string folder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+                string folder = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "images");
 
                 if (!Directory.Exists(folder))
+                {
                     Directory.CreateDirectory(folder);
+                }
 
-                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(jook.ImageFile.FileName);
+                string fileName = Guid.NewGuid().ToString()
+                                  + Path.GetExtension(jook.ImageFile.FileName);
+
                 string filePath = Path.Combine(folder, fileName);
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
@@ -76,11 +86,13 @@ namespace Klub_Finder.Controllers
             {
                 _context.Jook.Add(jook);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
             return View("~/Views/FoodAndDrinks/Jook/Create.cshtml", jook);
         }
+        
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
