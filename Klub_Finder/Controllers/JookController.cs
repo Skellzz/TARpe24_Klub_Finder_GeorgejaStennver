@@ -15,14 +15,14 @@ namespace Klub_Finder.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var Jook = await _context.Jook.ToListAsync();
-            return View(Jook);
+            var jook = await _context.Jook.ToListAsync();
+            return View("~/Views/FoodAndDrinks/Jook/Index.cshtml", jook);
         }
 
 
         public IActionResult Create()
         {
-            return View();
+            return View("~/Views/FoodAndDrinks/Jook/Create.cshtml");
         }
 
 
@@ -55,7 +55,7 @@ namespace Klub_Finder.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(jook);
+            return View("~/Views/FoodAndDrinks/Jook/Create.cshtml", jook);
         }
 
         [HttpGet]
@@ -68,7 +68,7 @@ namespace Klub_Finder.Controllers
                 return NotFound();
             }
 
-            return View(jook);
+            return View("~/Views/FoodAndDrinks/Jook/Edit.cshtml", jook);
         }
 
         [HttpPost]
@@ -87,7 +87,7 @@ namespace Klub_Finder.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(jook);
+            return View("~/Views/FoodAndDrinks/Jook/Edit.cshtml", jook);
         }
 
 
@@ -101,7 +101,7 @@ namespace Klub_Finder.Controllers
                 return NotFound();
             }
 
-            return View(jook);
+            return View("~/Views/FoodAndDrinks/Jook/Delete.cshtml", jook);
         }
 
 
