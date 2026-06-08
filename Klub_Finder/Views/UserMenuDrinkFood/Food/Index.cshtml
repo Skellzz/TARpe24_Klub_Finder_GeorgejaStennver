@@ -257,5 +257,15 @@
         document.getElementById('modalDesc').innerText = card.dataset.desc;
 
         document.getElementById('foodModal').classList.add('open');
+            const modalImg = document.getElementById('modalImg');
+    if (card.dataset.img) {
+        modalImg.src = card.dataset.img;
+        modalImg.style.display = 'block';
+        document.querySelector('.modal-image-side').style.display = 'block';
+    } else {
+        modalImg.style.display = 'none';
+        document.querySelector('.modal-image-side').style.display = 'none';
     }
+    }
+    
 </script>
