@@ -7,10 +7,12 @@
 <div class="food-menu-box">
     <h1>TOIDUD</h1>
 
-    <div class="food-grid">
+    <div class="food-grid" id="foodGrid">
         @foreach (var item in Model)
         {
-            <div class="food-card" data-desc="@item.Description" data-price="@item.Price" data-name="@item.FoodName" data-img="@item.ImagePath" onclick="openModal(this)">
+            <div class="food-card" data-id="@item.Id" data-desc="@item.Description" data-price="@item.Price" data-name="@item.FoodName" data-img="@item.ImagePath" onclick="openModal(this)">
+                <div class="favorite-heart" onclick="toggleFavorite(event, this)">&#9825;</div>
+
                 <div class="food-image-box">
                     @if (!string.IsNullOrEmpty(item.ImagePath))
                     {
@@ -74,22 +76,6 @@
         justify-items: center;
     }
 
-    .food-card {
-        width: 170px;
-        min-height: 230px;
-        border: 1px solid white;
-        text-align: center;
-        padding: 10px;
-        background: rgba(0, 0, 0, 0.25);
-        cursor: pointer;
-        transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-        .food-card:hover {
-            transform: scale(1.05);
-            border-color: #ff00b7;
-        }
-
     .food-image-box {
         width: 145px;
         height: 100px;
@@ -133,22 +119,6 @@
             color: white;
             background-color: #ff00b7;
         }
-
-    .food-modal-backdrop {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-        z-index: 9999;
-    }
 
     .food-modal-backdrop {
         position: fixed;
@@ -250,27 +220,31 @@
             object-fit: cover;
         }
 </style>
+
 <script>
+
+
     function openModal(card) {
         document.getElementById('modalName').innerText = card.dataset.name;
         document.getElementById('modalPrice').innerText = card.dataset.price + ' €';
         document.getElementById('modalDesc').innerText = card.dataset.desc;
 
+        const modalImg = document.getElementById('modalImg');
+        if (card.dataset.img) {
+            modalImg.src = card.dataset.img;
+            modalImg.style.display = 'block';
+            document.querySelector('.modal-image-side').style.display = 'block';
+        } else {
+            modalImg.style.display = 'none';
+            document.querySelector('.modal-image-side').style.display = 'none';
+        }
+
         document.getElementById('foodModal').classList.add('open');
-            const modalImg = document.getElementById('modalImg');
-    if (card.dataset.img) {
-        modalImg.src = card.dataset.img;
-        modalImg.style.display = 'block';
-        document.querySelector('.modal-image-side').style.display = 'block';
-    } else {
-        modalImg.style.display = 'none';
-        document.querySelector('.modal-image-side').style.display = 'none';
     }
-    }
-        function closeModal(event) {
+
+    function closeModal(event) {
         if (event.target.id === 'foodModal' || event.target.classList.contains('modal-close')) {
             document.getElementById('foodModal').classList.remove('open');
         }
     }
-    
 </script>
