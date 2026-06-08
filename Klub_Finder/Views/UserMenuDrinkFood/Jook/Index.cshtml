@@ -1,0 +1,115 @@
+﻿@model IEnumerable<Klub_Finder.Models.Jook>
+
+@{
+    ViewData["Title"] = "Joogid";
+}
+
+<div class="drink-menu-box">
+    <h1>JOOGID</h1>
+
+    <div class="drink-grid">
+        @foreach (var item in Model)
+        {
+            <div class="drink-card">
+                <div class="drink-image-box">
+                    @if (!string.IsNullOrEmpty(item.ImagePath))
+                    {
+                        <img src="@item.ImagePath" alt="@item.DrinkName" />
+                    }
+                </div>
+
+                <h3>@item.DrinkName</h3>
+
+                <p>@item.DrinkType</p>
+                <p>@item.AlcoholPercentage%</p>
+                <p>@item.Price €</p>
+            </div>
+        }
+    </div>
+
+    <a asp-controller="FoodAndDrinks" asp-action="Index" class="back-btn">
+        BACK
+    </a>
+</div>
+
+<style>
+    .drink-menu-box {
+        width: 90%;
+        margin: 40px auto;
+        min-height: 700px;
+        border: 1px solid white;
+        background: linear-gradient(to bottom, #94147d, #252525 55%);
+        padding: 10px 40px 30px 40px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .drink-menu-box h1 {
+            text-align: center;
+            font-size: 22px;
+            letter-spacing: 4px;
+            margin-bottom: 50px;
+            font-weight: 300;
+        }
+
+    .drink-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 45px 80px;
+        justify-items: center;
+    }
+
+    .drink-card {
+        width: 170px;
+        min-height: 230px;
+        border: 1px solid white;
+        text-align: center;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.25);
+    }
+
+    .drink-image-box {
+        width: 145px;
+        height: 100px;
+        border: 1px solid white;
+        margin: 0 auto 10px auto;
+        background: transparent;
+    }
+
+        .drink-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .drink-card h3 {
+        font-size: 14px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
+
+    .drink-card p {
+        font-size: 12px;
+        margin: 3px 0;
+        text-transform: uppercase;
+    }
+
+    .back-btn {
+        margin-top: auto;
+        margin-bottom: 20px;
+        width: fit-content;
+        padding: 8px 40px;
+        border: 1px solid #ff00b7;
+        border-radius: 25px;
+        color: white;
+        text-decoration: none;
+        font-size: 22px;
+    }
+
+        .back-btn:hover {
+            color: white;
+            background-color: #ff00b7;
+        }
+</style>

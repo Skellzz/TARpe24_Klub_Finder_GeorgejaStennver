@@ -1,0 +1,58 @@
+﻿@model Klub_Finder.Models.Jook
+
+@{
+    ViewData["Title"] = "Add Drink";
+}
+
+<div class="container mt-5">
+    <h1>Add Drink</h1>
+
+    <form asp-controller="Jook" asp-action="Create" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group mb-3">
+            <label asp-for="DrinkName"></label>
+            <input asp-for="DrinkName" class="form-control" />
+            <span asp-validation-for="DrinkName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="DrinkType"></label>
+            <input asp-for="DrinkType" class="form-control" />
+            <span asp-validation-for="DrinkType" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="AlcoholPercentage"></label>
+            <input asp-for="AlcoholPercentage" class="form-control" />
+            <span asp-validation-for="AlcoholPercentage" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Price"></label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Drink Image</label>
+            <input asp-for="ImageFile" type="file" class="form-control" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">Save</button>
+        <a asp-controller="Jook" asp-action="Index" class="btn btn-secondary">Back</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
