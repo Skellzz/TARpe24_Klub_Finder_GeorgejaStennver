@@ -257,6 +257,24 @@
             }
         });
     });
+    function toggleFavorite(event, heartElement) {
+        event.stopPropagation();
+        const card = heartElement.closest(".food-card");
+        const id = card.dataset.id;
+        let favorites = JSON.parse(localStorage.getItem("foodFavorites")) || [];
+
+        if (card.classList.contains("is-favorite")) {
+            card.classList.remove("is-favorite");
+            heartElement.innerHTML = "&#9825;";
+            favorites = favorites.filter(favId => favId !== id);
+        } else {
+            card.classList.add("is-favorite");
+            heartElement.innerHTML = "&#9829;";
+            favorites.push(id);
+        }
+
+        localStorage.setItem("foodFavorites", JSON.stringify(favorites));
+    }
 
 
     function openModal(card) {
