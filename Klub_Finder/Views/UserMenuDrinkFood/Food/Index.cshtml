@@ -267,5 +267,10 @@
         document.querySelector('.modal-image-side').style.display = 'none';
     }
     }
+        function closeModal(event) {
+        if (event.target.id === 'foodModal' || event.target.classList.contains('modal-close')) {
+            document.getElementById('foodModal').classList.remove('open');
+        }
+    }
     
 </script>
