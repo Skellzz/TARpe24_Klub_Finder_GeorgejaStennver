@@ -75,7 +75,32 @@
         gap: 45px 80px;
         justify-items: center;
     }
+    .food-card {
+        position: relative;
+        padding: 10px 10px 35px 10px;
+        order: 2;
+    }
 
+        .food-card.is-favorite {
+            order: 1;
+            border-color: #ff00b7;
+        }
+
+    .favorite-heart {
+        position: absolute;
+        bottom: 8px;
+        right: 12px;
+        font-size: 22px;
+        color: #ff00b7;
+        cursor: pointer;
+        z-index: 10;
+        transition: transform 0.2s ease;
+        user-select: none;
+    }
+
+        .favorite-heart:hover {
+            transform: scale(1.2);
+        }
     .food-image-box {
         width: 145px;
         height: 100px;
