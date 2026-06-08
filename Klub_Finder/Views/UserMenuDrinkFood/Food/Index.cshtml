@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Klub_Finder.Models.Food>
+
+@{
+    ViewData["Title"] = "Toidud";
+}
+
+<div class="food-menu-box">
+    <h1>TOIDUD</h1>
+
+    <div class="food-grid">
+        @foreach (var item in Model)
+        {
+            <div class="food-card" data-desc="@item.Description" data-price="@item.Price" data-name="@item.FoodName" data-img="@item.ImagePath" onclick="openModal(this)">
+                <div class="food-image-box">
+                    @if (!string.IsNullOrEmpty(item.ImagePath))
+                    {
+                        <img src="@item.ImagePath" alt="@item.FoodName" />
+                    }
+                </div>
+
+                <h3>@item.FoodName</h3>
+                <p>@item.Price €</p>
+            </div>
+        }
+    </div>
+
+    <a asp-controller="FoodAndDrinks" asp-action="Index" class="back-btn">
+        BACK
+    </a>
+</div>
+
+<div class="food-modal-backdrop" id="foodModal" onclick="closeModal(event)">
+    <div class="food-modal-content">
+        <span class="modal-close" onclick="closeModal(event)">&times;</span>
+        <div class="modal-layout">
+            <div class="modal-info-side">
+                <h2 id="modalName"></h2>
+                <div id="modalPrice" class="modal-price"></div>
+                <hr class="modal-divider" />
+                <p id="modalDesc" class="modal-description"></p>
+            </div>
+            <div class="modal-image-side">
+                <img id="modalImg" src="" alt="" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .food-menu-box {
+        width: 90%;
+        margin: 40px auto;
+        min-height: 700px;
+        border: 1px solid white;
+        background: linear-gradient(to bottom, #94147d, #252525 55%);
+        padding: 10px 40px 30px 40px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .food-menu-box h1 {
+            text-align: center;
+            font-size: 22px;
+            letter-spacing: 4px;
+            margin-bottom: 50px;
+            font-weight: 300;
+        }
+
+    .food-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 45px 80px;
+        justify-items: center;
+    }
+
+    .food-card {
+        width: 170px;
+        min-height: 230px;
+        border: 1px solid white;
+        text-align: center;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+        transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+       
+</style>
