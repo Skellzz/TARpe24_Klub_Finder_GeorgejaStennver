@@ -1,7 +1,9 @@
 ﻿using Klub_Finder.Data;
+using Klub_Finder.Migrations;
 using Klub_Finder.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Klub_Finder.Controllers
 {
@@ -14,14 +16,33 @@ namespace Klub_Finder.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        private async Task<bool> IsAdmin()
         {
-            var food = await _context.Food.ToListAsync();
-            return View("~/Views/FoodAndDrinks/Food/Index.cshtml", food);
+            var user = await _context.Users
+                .FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
+
+            return user != null && user.IsAdmin == true;
         }
 
-        public IActionResult Create()
+
+        public async Task<IActionResult> Index()
         {
+            var foods = await _context.Food.ToListAsync();
+            if (await IsAdmin())
+            {
+                return View("~/Views/FoodAndDrinks/Food/Index.cshtml", foods);
+            }
+
+            return View("~/Views/UserMenuDrinkFood/Food/Index.cshtml", foods);
+
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            if (!await IsAdmin())
+            {
+                return Forbid();
+            }
             return View("~/Views/FoodAndDrinks/Food/Create.cshtml");
         }
 
@@ -29,14 +50,27 @@ namespace Klub_Finder.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Food food)
         {
+            if (!await IsAdmin())
+            {
+                return Forbid();
+            }
+            
+            ModelState.Remove("ImageFile");
+            ModelState.Remove("ImagePath");
+          
             if (food.ImageFile != null)
             {
                 string folder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
 
                 if (!Directory.Exists(folder))
+                {
                     Directory.CreateDirectory(folder);
+                }
+                   
 
-                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(food.ImageFile.FileName);
+                string fileName = Guid.NewGuid().ToString()
+                                  + Path.GetExtension(food.ImageFile.FileName);
+                
                 string filePath = Path.Combine(folder, fileName);
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
@@ -49,8 +83,10 @@ namespace Klub_Finder.Controllers
 
             if (ModelState.IsValid)
             {
+                
                 _context.Food.Add(food);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -60,6 +96,11 @@ namespace Klub_Finder.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            if (!await IsAdmin())
+            {
+                return Forbid();
+            }
+
             var food = await _context.Food.FindAsync(id);
 
             if (food == null)
@@ -74,6 +115,10 @@ namespace Klub_Finder.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Food food)
         {
+            if (!await IsAdmin())
+            {
+                return Forbid();
+            }
             if (id != food.Id)
             {
                 return NotFound();
@@ -91,6 +136,10 @@ namespace Klub_Finder.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
+            if (!await IsAdmin())
+            {
+                return Forbid();
+            }
             var food = await _context.Food
                 .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -106,6 +155,10 @@ namespace Klub_Finder.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!await IsAdmin())
+            {
+                return Forbid();
+            }
             var food = await _context.Food.FindAsync(id);
 
             if (food != null)
