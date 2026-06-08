@@ -250,4 +250,12 @@
             object-fit: cover;
         }
 </style>
+<script>
+    function openModal(card) {
+        document.getElementById('modalName').innerText = card.dataset.name;
+        document.getElementById('modalPrice').innerText = card.dataset.price + ' €';
+        document.getElementById('modalDesc').innerText = card.dataset.desc;
 
+        document.getElementById('foodModal').classList.add('open');
+    }
+</script>
