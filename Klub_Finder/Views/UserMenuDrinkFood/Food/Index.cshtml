@@ -150,4 +150,104 @@
         z-index: 9999;
     }
 
+    .food-modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        z-index: 9999;
+    }
+
+        .food-modal-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+    .food-modal-content {
+        background: linear-gradient(to bottom, #4a083e, #1a1a1a);
+        border: 2px solid #ff00b7;
+        width: 650px;
+        max-width: 90%;
+        padding: 30px;
+        position: relative;
+        color: white;
+        transform: scale(0.7);
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .food-modal-backdrop.open .food-modal-content {
+        transform: scale(1);
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 30px;
+        color: white;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+        .modal-close:hover {
+            color: #ff00b7;
+        }
+
+    .modal-layout {
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+    }
+
+    .modal-info-side {
+        flex: 1;
+    }
+
+        .modal-info-side h2 {
+            font-size: 24px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0 0 5px 0;
+        }
+
+    .modal-price {
+        font-size: 18px;
+        color: #ff00b7;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .modal-divider {
+        border: 0;
+        border-top: 1px solid #ff00b7;
+        margin: 15px 0;
+    }
+
+    .modal-description {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #ddd;
+    }
+
+    .modal-image-side {
+        width: 220px;
+        height: 160px;
+        border: 1px solid white;
+        flex-shrink: 0;
+    }
+
+        .modal-image-side img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 </style>
+
