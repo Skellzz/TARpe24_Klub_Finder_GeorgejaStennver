@@ -247,6 +247,16 @@
 </style>
 
 <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const favorites = JSON.parse(localStorage.getItem("foodFavorites")) || [];
+        document.querySelectorAll(".food-card").forEach(card => {
+            const id = card.dataset.id;
+            if (favorites.includes(id)) {
+                card.classList.add("is-favorite");
+                card.querySelector(".favorite-heart").innerHTML = "&#9829;";
+            }
+        });
+    });
 
 
     function openModal(card) {
