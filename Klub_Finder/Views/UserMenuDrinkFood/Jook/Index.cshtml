@@ -20,6 +20,8 @@
                  data-alcohol="@item.AlcoholPercentage"
                  onclick="openDrinkModal(this)">
 
+                <div class="favorite-heart" onclick="toggleDrinkFavorite(event, this)">&#9825;</div>
+
                 <div class="drink-image-box">
                     @if (!string.IsNullOrEmpty(item.ImagePath))
                     {
@@ -99,14 +101,36 @@
         background: rgba(0, 0, 0, 0.25);
         cursor: pointer;
         position: relative;
-        padding: 10px;
+        padding: 10px 10px 35px 10px;
+        order: 2;
         box-sizing: border-box;
         transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
+        .drink-card.is-favorite {
+            order: 1;
+            border-color: #ff00b7;
+        }
+
         .drink-card:hover {
             transform: scale(1.05);
             border-color: #ff00b7;
+        }
+
+    .favorite-heart {
+        position: absolute;
+        bottom: 8px;
+        right: 12px;
+        font-size: 22px;
+        color: #ff00b7;
+        cursor: pointer;
+        z-index: 10;
+        transition: transform 0.2s ease;
+        user-select: none;
+    }
+
+        .favorite-heart:hover {
+            transform: scale(1.2);
         }
 
     .drink-image-box {
@@ -262,6 +286,40 @@
 </style>
 
 <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const favorites = JSON.parse(localStorage.getItem("drinkFavorites")) || [];
+
+        document.querySelectorAll(".drink-card").forEach(card => {
+            const id = card.dataset.id;
+
+            if (favorites.includes(id)) {
+                card.classList.add("is-favorite");
+                card.querySelector(".favorite-heart").innerHTML = "&#9829;";
+            }
+        });
+    });
+
+    function toggleDrinkFavorite(event, heartElement) {
+        event.stopPropagation();
+
+        const card = heartElement.closest(".drink-card");
+        const id = card.dataset.id;
+
+        let favorites = JSON.parse(localStorage.getItem("drinkFavorites")) || [];
+
+        if (card.classList.contains("is-favorite")) {
+            card.classList.remove("is-favorite");
+            heartElement.innerHTML = "&#9825;";
+            favorites = favorites.filter(favId => favId !== id);
+        } else {
+            card.classList.add("is-favorite");
+            heartElement.innerHTML = "&#9829;";
+            favorites.push(id);
+        }
+
+        localStorage.setItem("drinkFavorites", JSON.stringify(favorites));
+    }
+
     function openDrinkModal(card) {
         document.getElementById('modalDrinkName').innerText = card.dataset.name;
         document.getElementById('modalDrinkPrice').innerText = card.dataset.price + ' €';
