@@ -7,10 +7,19 @@
 <div class="drink-menu-box">
     <h1>JOOGID</h1>
 
-    <div class="drink-grid">
+    <div class="drink-grid" id="drinkGrid">
         @foreach (var item in Model)
         {
-            <div class="drink-card">
+            <div class="drink-card"
+                 data-id="@item.Id"
+                 data-desc="@item.Description"
+                 data-price="@item.Price"
+                 data-name="@item.DrinkName"
+                 data-img="@item.ImagePath"
+                 data-type="@item.DrinkType"
+                 data-alcohol="@item.AlcoholPercentage"
+                 onclick="openDrinkModal(this)">
+
                 <div class="drink-image-box">
                     @if (!string.IsNullOrEmpty(item.ImagePath))
                     {
@@ -19,7 +28,6 @@
                 </div>
 
                 <h3>@item.DrinkName</h3>
-
                 <p>@item.DrinkType</p>
                 <p>@item.AlcoholPercentage%</p>
                 <p>@item.Price €</p>
@@ -30,6 +38,29 @@
     <a asp-controller="FoodAndDrinks" asp-action="Index" class="back-btn">
         BACK
     </a>
+</div>
+
+<div class="drink-modal-backdrop" id="drinkModal" onclick="closeDrinkModal(event)">
+    <div class="drink-modal-content">
+        <span class="modal-close" onclick="closeDrinkModal(event)">&times;</span>
+
+        <div class="modal-layout">
+            <div class="modal-info-side">
+                <h2 id="modalDrinkName"></h2>
+                <div id="modalDrinkPrice" class="modal-price"></div>
+                <div id="modalDrinkType" class="modal-extra"></div>
+                <div id="modalDrinkAlcohol" class="modal-extra"></div>
+
+                <hr class="modal-divider" />
+
+                <p id="modalDrinkDesc" class="modal-description"></p>
+            </div>
+
+            <div class="modal-image-side">
+                <img id="modalDrinkImg" src="" alt="" />
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
@@ -65,9 +96,18 @@
         min-height: 230px;
         border: 1px solid white;
         text-align: center;
-        padding: 10px;
         background: rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+        position: relative;
+        padding: 10px;
+        box-sizing: border-box;
+        transition: transform 0.2s ease, border-color 0.2s ease;
     }
+
+        .drink-card:hover {
+            transform: scale(1.05);
+            border-color: #ff00b7;
+        }
 
     .drink-image-box {
         width: 145px;
@@ -112,4 +152,140 @@
             color: white;
             background-color: #ff00b7;
         }
+
+    .drink-modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        z-index: 9999;
+    }
+
+        .drink-modal-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+    .drink-modal-content {
+        background: linear-gradient(to bottom, #4a083e, #1a1a1a);
+        border: 2px solid #ff00b7;
+        width: 650px;
+        max-width: 90%;
+        padding: 30px;
+        position: relative;
+        color: white;
+        transform: scale(0.7);
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .drink-modal-backdrop.open .drink-modal-content {
+        transform: scale(1);
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 30px;
+        color: white;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+        .modal-close:hover {
+            color: #ff00b7;
+        }
+
+    .modal-layout {
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+    }
+
+    .modal-info-side {
+        flex: 1;
+    }
+
+        .modal-info-side h2 {
+            font-size: 24px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0 0 5px 0;
+        }
+
+    .modal-price {
+        font-size: 18px;
+        color: #ff00b7;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .modal-extra {
+        font-size: 13px;
+        color: #ddd;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+    }
+
+    .modal-divider {
+        border: 0;
+        border-top: 1px solid #ff00b7;
+        margin: 15px 0;
+    }
+
+    .modal-description {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #ddd;
+    }
+
+    .modal-image-side {
+        width: 220px;
+        height: 160px;
+        border: 1px solid white;
+        flex-shrink: 0;
+    }
+
+        .modal-image-side img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 </style>
+
+<script>
+    function openDrinkModal(card) {
+        document.getElementById('modalDrinkName').innerText = card.dataset.name;
+        document.getElementById('modalDrinkPrice').innerText = card.dataset.price + ' €';
+        document.getElementById('modalDrinkType').innerText = card.dataset.type;
+        document.getElementById('modalDrinkAlcohol').innerText = card.dataset.alcohol + '%';
+        document.getElementById('modalDrinkDesc').innerText = card.dataset.desc;
+
+        const modalImg = document.getElementById('modalDrinkImg');
+
+        if (card.dataset.img) {
+            modalImg.src = card.dataset.img;
+            modalImg.style.display = 'block';
+            document.querySelector('.modal-image-side').style.display = 'block';
+        } else {
+            modalImg.style.display = 'none';
+            document.querySelector('.modal-image-side').style.display = 'none';
+        }
+
+        document.getElementById('drinkModal').classList.add('open');
+    }
+
+    function closeDrinkModal(event) {
+        if (event.target.id === 'drinkModal' || event.target.classList.contains('modal-close')) {
+            document.getElementById('drinkModal').classList.remove('open');
+        }
+    }
+</script>
