@@ -16,9 +16,15 @@
             <th>Pilt</th>
             <th>Nimi</th>
             <th>Kirjeldus</th>
+            <th>Linn</th>
+            <th>Kaugus</th>
+            <th>18+</th>
+            <th>Live Music</th>
+            <th>Muusika</th>
             <th>Tegevused</th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var klub in Model)
         {
@@ -29,11 +35,23 @@
                         <img src="@klub.ImagePath" width="100" />
                     }
                 </td>
+
                 <td>@klub.ClubName</td>
                 <td>@klub.Description</td>
+                <td>@klub.City</td>
+                <td>@klub.DistanceKm km</td>
+                <td>@(klub.Is18Plus ? "Jah" : "Ei")</td>
+                <td>@(klub.HasLiveMusic ? "Jah" : "Ei")</td>
+                <td>@klub.MusicType</td>
+
                 <td>
-                    <a asp-controller="Klub" asp-action="Edit" asp-route-id="@klub.Id" class="btn btn-warning">Edit</a>
-                    <a asp-controller="Klub" asp-action="Delete" asp-route-id="@klub.Id" class="btn btn-danger">Delete</a>
+                    <a asp-controller="Klub" asp-action="Edit" asp-route-id="@klub.Id" class="btn btn-warning">
+                        Edit
+                    </a>
+
+                    <a asp-controller="Klub" asp-action="Delete" asp-route-id="@klub.Id" class="btn btn-danger">
+                        Delete
+                    </a>
                 </td>
             </tr>
         }
