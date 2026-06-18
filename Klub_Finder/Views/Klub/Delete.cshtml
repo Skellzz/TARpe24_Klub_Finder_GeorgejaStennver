@@ -17,10 +17,18 @@
     <div class="card-body">
         <h5 class="card-title">@Model.ClubName</h5>
         <p class="card-text">@Model.Description</p>
+
+        <p><strong>Linn:</strong> @Model.City</p>
+        <p><strong>Kaugus:</strong> @Model.DistanceKm km</p>
+        <p><strong>18+:</strong> @(Model.Is18Plus ? "Jah" : "Ei")</p>
+        <p><strong>Live Music:</strong> @(Model.HasLiveMusic ? "Jah" : "Ei")</p>
+        <p><strong>Muusika:</strong> @Model.MusicType</p>
     </div>
 </div>
 
 <form asp-action="Delete" method="post" class="mt-3">
+    @Html.AntiForgeryToken()
+
     <input type="hidden" asp-for="Id" />
 
     <button type="submit" class="btn btn-danger">Delete</button>
