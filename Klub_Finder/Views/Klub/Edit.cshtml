@@ -7,19 +7,44 @@
 <h1>Edit Club</h1>
 
 <form asp-action="Edit" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+
     <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="ImagePath" />
 
     <div class="mb-3">
         <label asp-for="ClubName" class="form-label"></label>
         <input asp-for="ClubName" class="form-control" />
-        <span asp-validation-for="ClubName" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Description" class="form-label"></label>
         <textarea asp-for="Description" class="form-control" rows="5"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="City" class="form-label"></label>
+        <input asp-for="City" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DistanceKm" class="form-label"></label>
+        <input asp-for="DistanceKm" class="form-control" />
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="Is18Plus" class="form-check-input" />
+        <label asp-for="Is18Plus" class="form-check-label">18+</label>
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="HasLiveMusic" class="form-check-input" />
+        <label asp-for="HasLiveMusic" class="form-check-label">Live Music</label>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MusicType" class="form-label"></label>
+        <input asp-for="MusicType" class="form-control" />
     </div>
 
     @if (!string.IsNullOrEmpty(Model.ImagePath))
@@ -38,9 +63,3 @@
     <button type="submit" class="btn btn-warning">Save</button>
     <a asp-action="Index" class="btn btn-secondary">Back</a>
 </form>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
