@@ -16,8 +16,8 @@ namespace Klub_Finder.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var klub = await _context.Klubid.ToListAsync();
-            return View(klub);
+            var klubid = await _context.Klubid.ToListAsync();
+            return View(klubid);
         }
 
         public IActionResult Create()
@@ -31,28 +31,20 @@ namespace Klub_Finder.Controllers
         {
             if (klub.ImageFile != null)
             {
-                string folder = Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    "wwwroot/images/klubs");
+                string folder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/klubs");
 
                 if (!Directory.Exists(folder))
                     Directory.CreateDirectory(folder);
 
-                string fileName =
-                    Guid.NewGuid() +
-                    Path.GetExtension(klub.ImageFile.FileName);
+                string fileName = Guid.NewGuid() + Path.GetExtension(klub.ImageFile.FileName);
+                string filePath = Path.Combine(folder, fileName);
 
-                string filePath =
-                    Path.Combine(folder, fileName);
-
-                using (var stream =
-                    new FileStream(filePath, FileMode.Create))
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await klub.ImageFile.CopyToAsync(stream);
                 }
 
-                klub.ImagePath =
-                    "/images/klubs/" + fileName;
+                klub.ImagePath = "/images/klubs/" + fileName;
             }
 
             _context.Klubid.Add(klub);
@@ -87,28 +79,20 @@ namespace Klub_Finder.Controllers
 
             if (klub.ImageFile != null)
             {
-                string folder = Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    "wwwroot/images/klubs");
+                string folder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/klubs");
 
                 if (!Directory.Exists(folder))
                     Directory.CreateDirectory(folder);
 
-                string fileName =
-                    Guid.NewGuid() +
-                    Path.GetExtension(klub.ImageFile.FileName);
+                string fileName = Guid.NewGuid() + Path.GetExtension(klub.ImageFile.FileName);
+                string filePath = Path.Combine(folder, fileName);
 
-                string filePath =
-                    Path.Combine(folder, fileName);
-
-                using (var stream =
-                    new FileStream(filePath, FileMode.Create))
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await klub.ImageFile.CopyToAsync(stream);
                 }
 
-                klub.ImagePath =
-                    "/images/klubs/" + fileName;
+                klub.ImagePath = "/images/klubs/" + fileName;
             }
             else
             {
