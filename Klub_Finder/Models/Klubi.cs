@@ -16,5 +16,10 @@ namespace Klub_Finder.Models
 
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
+        public string City { get; set; }
+        public int DistanceKm { get; set; }
+        public bool Is18Plus { get; set; }
+        public bool HasLiveMusic { get; set; }
+        public string MusicType { get; set; }
     }
 }
