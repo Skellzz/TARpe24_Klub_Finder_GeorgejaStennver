@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Klub_Finder.Models.Klubi>
+
+@{
+    ViewData["Title"] = "Admin Clubs";
+}
+
+<h1>Admin Clubs</h1>
+
+<a asp-controller="Klub" asp-action="Create" class="btn btn-success mb-3">
+    Create New Club
+</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Pilt</th>
+            <th>Nimi</th>
+            <th>Kirjeldus</th>
+            <th>Tegevused</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var klub in Model)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(klub.ImagePath))
+                    {
+                        <img src="@klub.ImagePath" width="100" />
+                    }
+                </td>
+                <td>@klub.ClubName</td>
+                <td>@klub.Description</td>
+                <td>
+                    <a asp-controller="Klub" asp-action="Edit" asp-route-id="@klub.Id" class="btn btn-warning">Edit</a>
+                    <a asp-controller="Klub" asp-action="Delete" asp-route-id="@klub.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

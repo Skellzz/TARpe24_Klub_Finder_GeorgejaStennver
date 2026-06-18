@@ -1,0 +1,183 @@
+﻿@model IEnumerable<Klub_Finder.Models.Klubi>
+
+@{
+    ViewData["Title"] = "Klubid";
+    var klubid = Model.ToList();
+}
+
+<style>
+    .klub-container {
+        width: 450px;
+        margin: auto;
+        padding: 25px;
+        background: linear-gradient(180deg,#1f3560,#51245a);
+        min-height: 750px;
+        border: 2px solid white;
+        border-radius: 10px;
+    }
+
+    .klub-card {
+        display: none;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+        .klub-card.active {
+            display: flex;
+        }
+
+    .image-container {
+        width: 100%;
+        height: 320px;
+        background: black;
+        border: 2px solid white;
+    }
+
+    .klub-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .klub-name {
+        background: black;
+        color: white;
+        text-align: center;
+        font-size: 32px;
+        padding: 15px;
+        border: 2px solid white;
+    }
+
+    .klub-description {
+        background: black;
+        color: white;
+        text-align: center;
+        font-size: 24px;
+        min-height: 180px;
+        padding: 30px;
+        border: 2px solid white;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 10px;
+    }
+
+    .action-btn {
+        width: 85px;
+        height: 85px;
+        border-radius: 50%;
+        border: 2px solid white;
+        font-size: 35px;
+        cursor: pointer;
+    }
+
+    .dislike {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .heart {
+        background-color: white;
+        color: red;
+    }
+
+    .like {
+        background-color: #28a745;
+        color: white;
+    }
+</style>
+
+@if (klubid.Any())
+{
+    <div class="klub-container">
+
+        @for (int i = 0; i < klubid.Count; i++)
+        {
+            var klub = klubid[i];
+
+            <div class="klub-card @(i == 0 ? "active" : "")">
+
+                <div class="image-container">
+                    <img src="@klub.ImagePath" class="klub-image" />
+                </div>
+
+                <div class="klub-name">
+                    @klub.ClubName
+                </div>
+
+                <div class="klub-description">
+                    @klub.Description
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn dislike" onclick="dislikeClub(@klub.Id)">
+                        ✖
+                    </button>
+
+                    <button class="action-btn heart" onclick="heartClub(@klub.Id)">
+                        ❤
+                    </button>
+
+                    <button class="action-btn like" onclick="likeClub(@klub.Id)">
+                        ✔
+                    </button>
+                </div>
+
+            </div>
+        }
+
+        <h2 id="noMoreClubs" style="display:none; color:white; text-align:center;">
+            Rohkem klubisid pole.
+        </h2>
+    </div>
+}
+else
+{
+    <h2>Klubisid ei leitud.</h2>
+}
+
+<script>
+    let currentCard = 0;
+
+    function showNextClub() {
+        const cards = document.querySelectorAll(".klub-card");
+
+        if (cards[currentCard]) {
+            cards[currentCard].classList.remove("active");
+        }
+
+        currentCard++;
+
+        if (cards[currentCard]) {
+            cards[currentCard].classList.add("active");
+        } else {
+            document.getElementById("noMoreClubs").style.display = "block";
+        }
+    }
+
+    function likeClub(id) {
+        fetch('/Klubid/Like?id=' + id, {
+            method: 'POST'
+        });
+
+        showNextClub();
+    }
+
+    function dislikeClub(id) {
+        fetch('/Klubid/Dislike?id=' + id, {
+            method: 'POST'
+        });
+
+        showNextClub();
+    }
+
+    function heartClub(id) {
+        fetch('/Klubid/SuperLike?id=' + id, {
+            method: 'POST'
+        });
+
+        showNextClub();
+    }
+</script>

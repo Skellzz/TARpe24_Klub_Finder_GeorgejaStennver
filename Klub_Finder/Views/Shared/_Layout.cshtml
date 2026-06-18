@@ -41,14 +41,17 @@
                                 <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AboutUs">About us</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link  text-" asp-area="" asp-controller="Klub" asp-action="Create">Create Klub</a>
+                                <a class="nav-link" asp-area="" asp-controller="FoodAndDrinks" asp-action="Index">Menu</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="FoodAndDrinks" asp-action="Index">Menu</a>
+                                <a class="nav-link" asp-area="" asp-controller="Klub" asp-action="Index">Create Klub</a>
                             </li>
                         }
                         else
                         {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Klubid" asp-action="Index">Klubs</a>
+                            </li>
                             
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
